@@ -5,25 +5,29 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Loader2, Lock, Clock } from "lucide-react"
 import { toast } from "sonner"
+import { useNavigate } from "react-router-dom"
 
 interface TimeSlotListProps {
-  astrologerId: number
+  astrologerId: number,
+  price: number
   selectedDate: Date | null
 }
 
 type Slot = {
   id: number
+  ammount: number
   startTime: string
   endTime: string
   isBlocked: boolean
 }
 
-export function TimeSlotList({ astrologerId, selectedDate }: TimeSlotListProps) {
+export function TimeSlotList({ astrologerId, selectedDate, price }: TimeSlotListProps) {
   const [slots, setSlots] = useState<Slot[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [bookingLoading, setBookingLoading] = useState<number | null>(null)
 
+  const navigate = useNavigate();
   // Fetch slots for selected date
   useEffect(() => {
     if (!selectedDate) return
@@ -39,7 +43,6 @@ export function TimeSlotList({ astrologerId, selectedDate }: TimeSlotListProps) 
           { params: { date: formattedDate } }
         )
 
-        console.log(res.data);
         const data = res.data || []
         setSlots(data)
       } catch (err) {
@@ -61,43 +64,44 @@ export function TimeSlotList({ astrologerId, selectedDate }: TimeSlotListProps) 
     }
 
     const formattedDate = format(selectedDate, "yyyy-MM-dd")
-    console.log(formattedDate);
     
+    // try {
+    //   setBookingLoading(slot.id)
 
-    try {
-      setBookingLoading(slot.id)
+    //   const res = await axiosClient.post("/api/v1/appointment/", {
+    //     astrologerId,
+    //     date: formattedDate,
+    //     startTime: slot.startTime,
+    //     endTime: slot.endTime,
+    //   })
       
+    //   if (res.status === 200 || res.status === 201) {
+    //     toast.success("Appointment booked successfully!", {
+    //       description: `${slot.startTime} - ${slot.endTime} on ${formattedDate}`,
+    //     })
 
-      const res = await axiosClient.post("/api/v1/appointment/", {
-        astrologerId,
-        date: formattedDate,
-        startTime: slot.startTime,
-        endTime: slot.endTime,
-      })
+    //     setSlots((prev) =>
+    //       prev.map((s) =>
+    //         s.id === slot.id ? { ...s, isBlocked: true } : s
+    //       )
+    //     )
+    //   } else {
+    //     toast.error("Failed to book appointment", {
+    //       description: res.data?.message || "Unexpected error occurred",
+    //     })
+    //   }
+    // } catch (err: any) {
+    //   console.error("Booking error:", err)
+    //   toast.error("Error booking appointment", {
+    //     description: err.response?.data?.message || "Something went wrong",
+    //   })
+    // } finally {
+    //   setBookingLoading(null)
+    // }
 
-      // if (res.status === 200 || res.status === 201) {
-      //   toast.success("Appointment booked successfully!", {
-      //     description: `${slot.startTime} – ${slot.endTime} on ${formattedDate}`,
-      //   })
-
-      //   setSlots((prev) =>
-      //     prev.map((s) =>
-      //       s.id === slot.id ? { ...s, isBlocked: true } : s
-      //     )
-      //   )
-      // } else {
-      //   toast.error("Failed to book appointment", {
-      //     description: res.data?.message || "Unexpected error occurred",
-      //   })
-      // }
-    } catch (err: any) {
-      console.error("Booking error:", err)
-      toast.error("Error booking appointment", {
-        description: err.response?.data?.message || "Something went wrong",
-      })
-    } finally {
-      setBookingLoading(null)
-    }
+    navigate(
+    `/checkout?astrologerId=${astrologerId}&price=${price}&date=${formattedDate}&startTime=${slot.startTime}&endTime=${slot.endTime}`
+  )
   }
 
   if (!selectedDate) {

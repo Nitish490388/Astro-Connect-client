@@ -1,9 +1,8 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import HomeLayout from "./components/layout/homeLayout";
 import Login from "./pages/Login";
-import UserDashboard from "./pages/User/UserDashboard";
 import CheckoutPage from "./pages/Checkout/CheckoutPage";
 import ChatPage from "./pages/Chat/ChatPage";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
@@ -17,6 +16,7 @@ import AstrologerDetailPage from "./pages/AstrologerDetail";
 import RestrictAstro from "./components/restrictAstro";
 import AstroRegister from "./pages/AstroRegister";
 import Checkout from "./pages/Checkout";
+import UserDashboard from "./pages/User/UserDashboard";
 
 function App() {
   return (
@@ -31,17 +31,17 @@ function App() {
           <Route path="/astrologers/:id" element={<AstrologerDetailPage />} />
 
           <Route element={<RestrictUser />}>
-            <Route path="/user/dashboard" element={<UserDashboard />} />
             <Route path="/user/update" element={<UserProfileUpdate />} />
             <Route path="/chat/:appointmentId" element={<ChatPage />} />
             <Route path="/astro/register" element={<AstroRegister />} />
-            <Route path="/astro/checkout" element={<Checkout />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/user/dashboard" element={<UserDashboard />} />
           </Route>
 
           <Route element={<RestrictAstro />}>
             <Route path="/astro/dashboard" element={<AstroDashboard />} />
           </Route>
-          
+
           <Route path="/checkout/:appointmentId" element={<CheckoutPage />} />
           <Route path="/admin" element={<AdminDashboard />} />
           {/* <Route path="/admin/users" element={<AdminUsers />} /> */}

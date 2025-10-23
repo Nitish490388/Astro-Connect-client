@@ -5,8 +5,10 @@ import { TimeSlotList } from "./timeSlotList"
 
 export function AstrologerAvailabilityDetailsCard({
   astroId,
+  price,
 }: {
-  astroId: number
+  astroId: number,
+  price: number
 }) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)  
 
@@ -32,7 +34,7 @@ export function AstrologerAvailabilityDetailsCard({
 
         {/* Right: Slots */}
         <div className="flex-1 border border-border rounded-xl p-4 shadow-xs bg-background">
-          <TimeSlotList astrologerId={astroId} selectedDate={selectedDate} />
+          <TimeSlotList astrologerId={astroId} selectedDate={selectedDate} price={price}/>
         </div>
       </CardContent>
     </Card>

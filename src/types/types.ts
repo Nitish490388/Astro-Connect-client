@@ -36,3 +36,14 @@ export interface Slot {
   endTime: string;
   isBlocked: boolean;
 };
+
+export interface Appointment {
+  id: number;
+  astrologerId: number
+  endTime: string 
+  startTime: string
+  astrologer: Astrologer
+  userId: number
+  status: string
+  date: string
+}

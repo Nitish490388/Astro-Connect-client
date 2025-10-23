@@ -3,10 +3,13 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import {AvailabilityManager} from "@/components/availabilityManager" 
 import {AppointmentsList} from "@/components/appointmentsList"
-import {QuickActions} from "@/components/quickActions"
+import { ChatsTab } from "@/components/ChatsTab"
+import { useAppSelector } from "@/store/hooks"
 
 export default function AstroDashboard() {
   const [tab, setTab] = useState("availability")
+    const { user } = useAppSelector((state) => state.user);
+    
 
   return (
     <div className="bg-background md:px-8">
@@ -16,7 +19,7 @@ export default function AstroDashboard() {
         <TabsList className="grid grid-cols-3 rounded-xl bg-muted">
           <TabsTrigger value="availability">Availability</TabsTrigger>
           <TabsTrigger value="appointments">Appointments</TabsTrigger>
-          <TabsTrigger value="operations">Operations</TabsTrigger>
+          <TabsTrigger value="operations">Chats</TabsTrigger>
         </TabsList>
 
         <TabsContent value="availability">
@@ -44,10 +47,10 @@ export default function AstroDashboard() {
         <TabsContent value="operations">
           <Card className="mt-4 shadow-md rounded-2xl">
             <CardHeader>
-              <CardTitle>Quick Operations</CardTitle>
+              <CardTitle>Chats</CardTitle>
             </CardHeader>
             <CardContent>
-              <QuickActions />
+              <ChatsTab role="astrologer" id={user?.astrologer?.id || 0}/>
             </CardContent>
           </Card>
         </TabsContent>

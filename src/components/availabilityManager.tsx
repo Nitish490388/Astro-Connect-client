@@ -39,7 +39,6 @@ export function AvailabilityManager() {
       const res = await axiosClient.get(
         `/api/v1/availability/${astrologerId}/availability`
       );
-      console.log(res.data);
 
       setSlots(res.data || []);
     } catch (err) {

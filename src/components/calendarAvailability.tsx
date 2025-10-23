@@ -30,7 +30,6 @@ export function CalendarAvailability({
           `/api/v1/availability/${astrologerId}/availability/month`,
           { params: { year, month } }
         )
-        console.log(res);
         
         setAvailability(res.data || [])
       } catch (err) {

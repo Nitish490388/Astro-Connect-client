@@ -17,7 +17,6 @@ export function AstroInfo() {
     async function fetchAstrologer() {
       try {
         const res = await axiosClient(`/api/v1/astrologer/${id}`);
-        console.log(res.data);
         
         setAstrologer(res.data);
       } catch (err) {
@@ -109,7 +108,7 @@ export function AstroInfo() {
           </CardContent>
         </Card>
         
-          <AstrologerAvailabilityDetailsCard astroId={Number(id)} />
+          <AstrologerAvailabilityDetailsCard astroId={Number(id)} price={astrologer.price || 0} />
         </div>
     </div>
   );
