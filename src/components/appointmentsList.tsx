@@ -9,12 +9,17 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
+import { useAppSelector } from "@/store/hooks"
 
 type Appointment = {
   id: string
-  clientName: string
   date: string
-  time: string
+  startDate: string,
+  endDate: string,
+  user: {
+    id: number,
+    name: string
+  }
   status: "pending" | "accepted" | "rejected" | "cancelled"
 }
 
@@ -30,6 +35,7 @@ export function AppointmentsList() {
   const [newDate, setNewDate] = useState("")
   const [newStartTime, setNewStartTime] = useState("")
   const [newEndTime, setNewEndTime] = useState("")
+  const { user } = useAppSelector((state) => state.user);
 
   // ✅ Fetch appointments from API
   useEffect(() => {
@@ -37,7 +43,9 @@ export function AppointmentsList() {
       try {
         setLoading(true)
         setError(null)
-        const res = await axiosClient.get("/api/v1/appointment/")
+        const res = await axiosClient.get(`/api/v1/appointment/astrologer/${user?.astrologer?.id}`)
+        console.log(res.data);
+        
         setAppointments(res.data || [])
       } catch (err: any) {
         console.error("Error fetching appointments:", err)
@@ -172,7 +180,7 @@ export function AppointmentsList() {
                   <CardHeader className="p-0 mb-2">
                     <CardTitle className="text-base font-semibold flex items-center gap-2">
                       <User2 className="w-4 h-4 text-muted-foreground" />
-                      {appointment.clientName}
+                      {appointment.user.name}
                     </CardTitle>
                   </CardHeader>
 
@@ -183,7 +191,7 @@ export function AppointmentsList() {
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Clock className="w-4 h-4" />
-                      <span>{appointment.time}</span>
+                      <span>{appointment.startDate}</span>
                     </div>
                     <Badge
                       className={`mt-2 capitalize ${getBadgeColor(

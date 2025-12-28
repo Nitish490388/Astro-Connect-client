@@ -108,7 +108,7 @@ export function AstroInfo() {
           </CardContent>
         </Card>
         
-          <AstrologerAvailabilityDetailsCard astroId={Number(id)} price={astrologer.price || 0} />
+          {/* <AstrologerAvailabilityDetailsCard astroId={Number(id)} price={astrologer.price || 0} /> */}
         </div>
     </div>
   );

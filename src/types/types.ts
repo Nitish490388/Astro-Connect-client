@@ -47,3 +47,9 @@ export interface Appointment {
   status: string
   date: string
 }
+
+export interface AlertContentType {
+  name: string;
+  description: string;
+  buttonText: string;
+}

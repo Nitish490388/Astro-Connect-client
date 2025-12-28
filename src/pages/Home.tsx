@@ -26,18 +26,18 @@ const Home = () => {
 
           {/* 🚀 Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/user/dashboard">
+            <Link to="/astrologers">
               <Button className="w-full sm:w-auto text-white bg-primary hover:bg-primary/90">
-                Go to Dashboard
+                Chat with Astrologer
               </Button>
             </Link>
 
-            <Link to="/astro/register">
+            <Link to="/user/dashboard">
               <Button
                 variant="outline"
                 className="w-full sm:w-auto border-primary text-primary hover:bg-primary/10"
               >
-                Join as Astrologer
+                Go to Dashboard
               </Button>
             </Link>
           </div>

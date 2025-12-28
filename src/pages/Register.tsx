@@ -38,6 +38,8 @@ export default function Register() {
     try {
       
       const response = await axiosClient.post("/api/v1/auth/register", formData);
+      console.log(response);
+      
       console.log("Registration Success:", response.data.result);
       
     } catch (err: any) {
